@@ -14,12 +14,12 @@ describe("JobListing", () => {
 
   const renderJobListing = (jobProps) => {
     render(JobListing, {
-      props: {
-        global: {
-          stubs: {
-            "router-link": RouterLinkStub,
-          },
+      global: {
+        stubs: {
+          "router-link": RouterLinkStub,
         },
+      },
+      props: {
         job: {
           ...jobProps,
         },
