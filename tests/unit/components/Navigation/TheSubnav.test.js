@@ -31,7 +31,7 @@ describe("TheSubnav", () => {
       const routeName = "JobResults";
       const { jobsStore } = renderTheSubnav(routeName);
       // const numberOfJobs = 16;
-      jobsStore.FILTERED_JOBS_BY_ORGANIZATIONS = Array();
+      jobsStore.FILTERED_JOBS = Array();
 
       const jobCount = await screen.findByText(0);
       expect(jobCount).toBeInTheDocument();

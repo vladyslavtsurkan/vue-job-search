@@ -3,7 +3,11 @@
     <div class="mt-5">
       <fieldset>
         <ul class="flex flex-row flex-wrap">
-          <li v-for="organization in UNIQUE_ORGANIZATIONS" :key="organization" class="h-8 w-1/2">
+          <li
+            v-for="organization in UNIQUE_ORGANIZATIONS"
+            :key="organization"
+            class="h-8 w-1/2"
+          >
             <input
               :id="organization"
               v-model="selectedOrganizations"
@@ -45,6 +49,7 @@ export default {
     ...mapActions(useUserStore, [ADD_SELECTED_ORGANIZATIONS]),
     selectOrganization() {
       this.ADD_SELECTED_ORGANIZATIONS(this.selectedOrganizations);
+      this.$router.push({ name: "JobResults" });
     },
   },
 };
