@@ -4,9 +4,7 @@ import axios from "axios";
 
 import { createJob } from "../../utils/createJob";
 import { useJobsStore } from "@/stores/jobs";
-import { useDegreesStore } from "@/stores/degrees";
 import { useUserStore } from "@/stores/user";
-import { describe } from "vitest";
 
 vi.mock("axios");
 const axiosGetMock = axios.get as Mock;
@@ -140,6 +138,40 @@ describe("getters", () => {
 
       const result = store.INCLUDE_JOB_BY_JOB_TYPE(job);
       expect(result).toBe(true);
+    });
+  });
+
+  describe("INCLUDE_JOB_BY_SKILL", () => {
+    it("identifies if job matches user's skill", () => {
+      const userStore = useUserStore();
+      userStore.skillsSearchTerm = "Vue";
+      const store = useJobsStore();
+      const job = createJob({ title: "Vue Developer" });
+
+      const result = store.INCLUDE_JOB_BY_SKILL(job);
+      expect(result).toBe(true);
+    });
+
+    it("handles inconsistent character casing", () => {
+      const userStore = useUserStore();
+      userStore.skillsSearchTerm = "vuE";
+      const store = useJobsStore();
+      const job = createJob({ title: "Vue Developer" });
+
+      const result = store.INCLUDE_JOB_BY_SKILL(job);
+      expect(result).toBe(true);
+    });
+
+    describe("when the user has not entered any skill", () => {
+      it("includes job", () => {
+        const userStore = useUserStore();
+        userStore.skillsSearchTerm = "";
+        const store = useJobsStore();
+        const job = createJob({ title: "Vue Developer" });
+
+        const result = store.INCLUDE_JOB_BY_SKILL(job);
+        expect(result).toBe(true);
+      });
     });
   });
 });
